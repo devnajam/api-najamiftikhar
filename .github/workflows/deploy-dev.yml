@@ -1,0 +1,30 @@
+name: Deploy Backend Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, dev]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Build Nest.js App
+        run: yarn run build
+
+      # - name: Deploy Application
+      #   run: |
+      #     # Assuming your application is already running as a service or process managed by PM2.
+      #     # You can stop and restart the service to apply the changes.
+      #     pm2 stop nestjs-example || true
+      #     pm2 delete nestjs-example || true
+      #     pm2 start dist/src/main.js --name nestjs-example
+
+     

@@ -1,0 +1,33 @@
+name: Deploy Nest.js App
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Nest.js App
+        run: npm run build
+
+      - name: Deploy Application
+        run: |
+          # Assuming your application is already running as a service or process managed by PM2.
+          # You can stop and restart the service to apply the changes.
+          pm2 stop your-app || true
+          pm2 delete your-app || true
+          pm2 start dist/main.js --name your-app
+
+      - name: Notify Deployment
+        run: |
+          # You can add notification commands here to notify about the deployment status.
+          echo "Deployment complete."
